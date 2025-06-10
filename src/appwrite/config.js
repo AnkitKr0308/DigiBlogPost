@@ -15,14 +15,14 @@ export class AppwriteService {
     this.storage = new Storage(this.client);
   }
 
-  async createPost({ title, content, slug, featuredImage, status, userId }) {
+  async createPost({ title, content, slug, featuredimage, status, userId }) {
     try {
       return await this.databases.createDocument(
         conf.appwriteDatabaseId,
         conf.appwriteCollectionId,
         ID.unique(),
 
-        { title, content, featuredImage, status, userId, slug }
+        { title, content, featuredimage, status, userId, slug }
       );
     } catch (error) {
       console.error("Error creating post:", error);
@@ -30,7 +30,7 @@ export class AppwriteService {
     }
   }
 
-  async updatePost(slug, { title, content, featuredImage, status, userId }) {
+  async updatePost(slug, { title, content, featuredimage, status, userId }) {
     try {
       return await this.databases.updateDocument(
         conf.appwriteDatabaseId,
@@ -39,7 +39,7 @@ export class AppwriteService {
         {
           title,
           content,
-          featuredImage,
+          featuredimage,
           status,
           userId,
         }
@@ -91,8 +91,12 @@ export class AppwriteService {
 
   async uploadFile(file) {
     try {
-      await this.storage.createFile(conf.appwriteBucketId, ID.unique(), file);
-      return true;
+      const fileuploaded = await this.storage.createFile(
+        conf.appwriteBucketId,
+        ID.unique(),
+        file
+      );
+      return fileuploaded;
     } catch (error) {
       console.error("Error uploading file:", error);
       throw error;

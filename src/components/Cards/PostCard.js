@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import appwriteservice from "../../appwrite/config";
 import { Link } from "react-router-dom";
 
-function PostCard({ $id, title, featuredImage }) {
+function PostCard({ $id, title, featuredimage }) {
   const [imageUrl, setImageUrl] = useState("");
 
   useEffect(() => {
     const loadImage = async () => {
-      if (featuredImage) {
+      if (featuredimage) {
         try {
-          const previewUrl = await appwriteservice.previewFile(featuredImage);
+          const previewUrl = await appwriteservice.previewFile(featuredimage);
           setImageUrl(previewUrl);
           console.log(previewUrl);
         } catch (error) {
@@ -18,7 +18,7 @@ function PostCard({ $id, title, featuredImage }) {
       }
     };
     loadImage();
-  }, [featuredImage]);
+  }, [featuredimage]);
 
   return (
     <Link to={`/post/${$id}`}>

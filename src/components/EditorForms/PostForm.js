@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import appwriteservice from "../../appwrite/config";
 import { useNavigate } from "react-router-dom";
@@ -17,40 +17,78 @@ function PostForm({ post }) {
       },
     });
 
+  const [imageUrl, setImageUrl] = useState("");
+
   const navigate = useNavigate();
   const userData = useSelector((state) => state.auth.user);
 
+  // const submit = async (data) => {
+  //   if (post) {
+  //     const file = data.image[0]
+  //       ? await appwriteservice.uploadFile(data.image[0])
+
+  //       : null;
+
+  //     if (file) {
+  //       appwriteservice.deleteFile(post.featuredimage);
+  //     }
+  //     const dbPost = await appwriteservice.updatePost(post.$id, {
+  //       ...data,
+  //       featuredimage: file ? file.$id : undefined,
+  //     });
+
+  //     if (dbPost) {
+  //       navigate(`/post/${dbPost.$id}`);
+  //     }
+  //   } else {
+  //     const file = await appwriteservice.uploadFile(data.image[0]);
+
+  //     if (file) {
+  //       data.featuredimage = file.$id;
+  //       const dbPost = await appwriteservice.createPost({
+  //         ...data,
+  //         userId: userData?.$id,
+  //       });
+
+  //       if (dbPost) {
+  //         navigate(`/post/${dbPost.$id}`);
+  //       }
+  //     }
+  //   }
+  // };
+
   const submit = async (data) => {
     if (post) {
-      const file = data.image[0]
+      const file = data.image?.[0]
         ? await appwriteservice.uploadFile(data.image[0])
         : null;
+      if (file) {
+        await appwriteservice.deleteFile(post.featuredimage);
+      }
+
+      const updatedPostData = { ...data };
+      delete updatedPostData.image;
 
       if (file) {
-        appwriteservice.deleteFile(post.featuredImage);
+        updatedPostData.featuredimage = file.$id;
+      } else if (post.featuredimage) {
+        updatedPostData.featuredimage = post.featuredimage;
       }
-      const dbPost = await appwriteservice.updatePost(post.$id, {
-        ...data,
-        featuredImage: file ? file.$id : undefined,
-      });
 
-      if (dbPost) {
-        navigate(`/post/${dbPost.$id}`);
-      }
+      const dbPost = await appwriteservice.updatePost(
+        post.$id,
+        updatedPostData
+      );
+      if (dbPost) navigate(`/post/${dbPost.$id}`);
     } else {
       const file = await appwriteservice.uploadFile(data.image[0]);
+      const postData = { ...data };
+      delete postData.image;
+      postData.featuredimage = file.$id;
+      postData.userId = userData?.$id;
 
-      if (file) {
-        data.featuredImage = file.$id;
-        const dbPost = await appwriteservice.createPost({
-          ...data,
-          userId: userData?.$id,
-        });
-
-        if (dbPost) {
-          navigate(`/post/${dbPost.$id}`);
-        }
-      }
+      const dbPost = await appwriteservice.createPost(postData);
+      if (dbPost) navigate(`/post/${dbPost.$id}`);
     }
   };
 
@@ -76,6 +114,14 @@ function PostForm({ post }) {
       subscription.unsubscribe();
     };
   }, [watch, setValue, slugTransform]);
+
+  useEffect(() => {
+    if (post?.featuredimage) {
+      appwriteservice
+        .previewFile(post.featuredimage)
+        .then((url) => setImageUrl(url));
+    }
+  }, [post?.featuredimage]);
 
   return (
     <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
@@ -114,11 +160,7 @@ function PostForm({ post }) {
         />
         {post && (
           <div className="w-full mb-4">
-            <img
-              src={appwriteservice.getFilePreview(post.featuredImage)}
-              alt={post.title}
-              className="rounded-lg"
-            />
+            <img src={imageUrl} alt={post.title} className="rounded-lg" />
           </div>
         )}
         <Select

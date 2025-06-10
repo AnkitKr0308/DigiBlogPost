@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container, LogoutBtn } from "../index";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import authservice from "../../appwrite/auth";
+import { setUser } from "../../features/authSlice";
 
 function Header() {
   const authstatus = useSelector((state) => state.auth.status);
   const navigate = useNavigate();
+  const userData = useSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    authservice.getCurrentUser().then((user) => {
+      dispatch(setUser(user));
+    });
+  }, [dispatch]);
   const navItems = [
     {
       name: "Home",
@@ -61,9 +70,12 @@ function Header() {
                   ) : null
                 )}
                 {authstatus && (
-                  <li>
-                    <LogoutBtn />
-                  </li>
+                  <ul>
+                    <li>
+                      <LogoutBtn />
+                    </li>
+                    <li>Welcome {userData.name}!</li>
+                  </ul>
                 )}
               </ul>
             </nav>

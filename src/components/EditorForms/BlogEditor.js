@@ -12,7 +12,7 @@ function BlogEditor({ name, control, label, defaultValue = "" }) {
         render={({ field: { onChange } }) => (
           <Editor
             apiKey={process.env.REACT_APP_EDITOR_API_KEY}
-            initialValue=""
+           
             init={{
               initialValue: defaultValue,
               height: 500,
@@ -44,7 +44,7 @@ function BlogEditor({ name, control, label, defaultValue = "" }) {
               content_style:
                 "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
             }}
-            onEditorChange={{ onChange }}
+            onEditorChange={(content) => onChange(content)}
           />
         )}
       />
