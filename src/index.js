@@ -7,7 +7,7 @@ import { Provider } from "react-redux";
 import store from "./store/store";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import AuthLayout from "./components/Authentication";
+import AuthLayout from "./components/Authentication/AuthLayout";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
