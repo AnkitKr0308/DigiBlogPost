@@ -11,7 +11,7 @@ function BlogEditor({ name, control, label, defaultValue = "" }) {
         control={control}
         render={({ field: { onChange } }) => (
           <Editor
-            apiKey="rf7htcu1rtu5akhz3s36267gus48mvpud2ksdue74vxmfwfx"
+            apiKey={process.env.REACT_APP_EDITOR_API_KEY}
             initialValue=""
             init={{
               initialValue: defaultValue,
