@@ -7,9 +7,11 @@ const Input = forwardRef(
     return (
       <div className="w-full mb-4">
         {label && (
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            {label}
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor={id}
+          >
+            {label}
           </label>
         )}
         <input
@@ -17,6 +19,7 @@ const Input = forwardRef(
           className={`px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${className}`}
           {...props}
           ref={ref}
+          type={type}
         />
       </div>
     );

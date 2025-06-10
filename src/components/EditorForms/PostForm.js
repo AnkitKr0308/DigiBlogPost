@@ -7,7 +7,7 @@ import BlogEditor from "./BlogEditor";
 import { Input, Select, Button } from "../index";
 
 function PostForm({ post }) {
-  const { register, handleSubmit, watch, control, setValue, getValue } =
+  const { register, handleSubmit, watch, control, setValue, getValues } =
     useForm({
       defaultValues: {
         title: post?.title || "",
@@ -44,7 +44,7 @@ function PostForm({ post }) {
         data.featuredImage = file.$id;
         const dbPost = await appwriteservice.createPost({
           ...data,
-          userId: userData.$id,
+          userId: userData?.$id,
         });
 
         if (dbPost) {
@@ -101,7 +101,7 @@ function PostForm({ post }) {
           label="Content :"
           name="content"
           control={control}
-          defaultValue={getValue("content")}
+          defaultValue={getValues("content")}
         />
       </div>
       <div className="w-1/3 px-2">

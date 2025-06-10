@@ -15,13 +15,14 @@ export class AppwriteService {
     this.storage = new Storage(this.client);
   }
 
-  async createPost(title, content, slug, featuredImage, status, userId) {
+  async createPost({ title, content, slug, featuredImage, status, userId }) {
     try {
       return await this.databases.createDocument(
         conf.appwriteDatabaseId,
         conf.appwriteCollectionId,
-        slug,
-        { title, content, featuredImage, status, userId }
+        ID.unique(),
+
+        { title, content, featuredImage, status, userId, slug }
       );
     } catch (error) {
       console.error("Error creating post:", error);
@@ -29,7 +30,7 @@ export class AppwriteService {
     }
   }
 
-  async updatePost(slug, title, content, featuredImage, status, userId) {
+  async updatePost(slug, { title, content, featuredImage, status, userId }) {
     try {
       return await this.databases.updateDocument(
         conf.appwriteDatabaseId,
