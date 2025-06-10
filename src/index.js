@@ -14,6 +14,7 @@ import Signup from "./pages/Signup";
 import AllPosts from "./pages/AllPosts";
 import AddPost from "./pages/AddPost";
 import EditPost from "./pages/EditPost";
+import Post from "./pages/Post";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -43,7 +44,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/all-posts",
+        path: "/posts",
         element: (
           <AuthLayout authentication={true}>
             <AllPosts />
@@ -63,6 +64,14 @@ const router = createBrowserRouter([
         element: (
           <AuthLayout authentication={true}>
             <EditPost />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/post/:slug/",
+        element: (
+          <AuthLayout authentication={true}>
+            <Post />
           </AuthLayout>
         ),
       },

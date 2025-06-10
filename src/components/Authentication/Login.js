@@ -31,39 +31,39 @@ function Login() {
   };
 
   return (
-    <div>
-      <div className="container mx-auto p-4">
-        <h1 className="text-2xl font-bold mb-4">Login</h1>
-        {error && <p className="text-red-500">{error}</p>}
-        <form onSubmit={handleSubmit(loginUser)} className="space-y-4">
-          <div>
-            <Input
-              label="Email"
-              placeholder="Enter your email"
-              type="email"
-              id="email"
-              {...register("email", { required: true })}
-            />
-          </div>
-          <div>
-            <Input
-              label="Password"
-              placeholder="Enter your password"
-              type="password"
-              id="password"
-              {...register("password", { required: true })}
-              required
-            />
-          </div>
+    <div className=" w-screen flex  justify-center bg-gray-50">
+      <div className="w-full max-w-md p-6 bg-white rounded-md shadow-md   items-center">
+        <h1 className="text-2xl font-bold mb-4 text-center">Login</h1>
+        {error && <p className="text-red-500 mb-4 text-center">{error}</p>}
+        <form
+          onSubmit={handleSubmit(loginUser)}
+          className="space-y-4 flex flex-col items-center w-full"
+        >
+          <Input
+            className="w-72"
+            label="Email"
+            placeholder="Enter your email"
+            type="email"
+            id="email"
+            {...register("email", { required: true })}
+          />
+          <Input
+            label="Password"
+            placeholder="Enter your password"
+            type="password"
+            id="password"
+            {...register("password", { required: true })}
+            required
+          />
           <Button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200"
+            className="bg-blue-600 text-white py-1.5 px-3 rounded-md hover:bg-blue-700 transition duration-200 w-20"
             label="Login"
           >
             Login
           </Button>
         </form>
-        <p className="mt-4">
+        <p className="mt-4 text-center">
           Don't have an account?{" "}
           <Link to="/Signup" className="text-blue-600 hover:underline">
             Sign Up

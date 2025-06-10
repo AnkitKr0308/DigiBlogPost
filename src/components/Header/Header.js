@@ -36,7 +36,7 @@ function Header() {
   ];
 
   return (
-    <header className="bg-white shadow-md sticky top-0 z-50">
+    <header className="bg-gray-100 p-4 flex-shrink-0">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Container>
           <div className="flex justify-between items-center h-16">

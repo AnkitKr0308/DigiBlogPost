@@ -6,13 +6,11 @@ function AllPosts() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    appwriteservice.getPosts(
-      [].then((posts) => {
-        if (posts) {
-          setPosts(posts.documents);
-        }
-      })
-    );
+    appwriteservice.getPosts([]).then((posts) => {
+      if (posts) {
+        setPosts(posts.documents);
+      }
+    });
   }, []);
 
   return (
@@ -20,7 +18,10 @@ function AllPosts() {
       <Container>
         <div className="flex flex-wrap">
           {posts.map((post) => (
-            <div key={post.$id} className="p-2 w-1/4">
+            <div
+              key={post.$id}
+              className="p-2 w-full h-full text-white flex items-center justify-center"
+            >
               <PostCard {...post} />
             </div>
           ))}
