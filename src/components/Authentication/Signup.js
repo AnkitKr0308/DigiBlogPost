@@ -5,8 +5,8 @@ import { useDispatch } from "react-redux";
 import authservice from "../../appwrite/auth";
 import { useState } from "react";
 import { login } from "../../features/authSlice";
-import Input from "../Input";
-import Button from "../Buttons";
+import Input from "../Input/Input";
+import Button from "../Buttons/Button";
 
 function Signup() {
   const navigate = useNavigate();

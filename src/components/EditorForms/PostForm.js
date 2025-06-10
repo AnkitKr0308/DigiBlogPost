@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import appwriteservice from "../../services/appwriteService";
+import appwriteservice from "../../appwrite/config";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import BlogEditor from "./BlogEditor";
