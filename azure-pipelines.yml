@@ -1,0 +1,33 @@
+# azure-pipelines.yml
+trigger:
+  branches:
+    include:
+      - main  # Change to your target branch if different
+
+pr:
+  branches:
+    include:
+      - main  # Optional: triggers pipeline on pull requests too
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '20.x'
+    displayName: 'Install Node.js'
+  - checkout: self  # Ensures code is pulled from GitHub
+
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '18.x'
+    displayName: 'Install Node.js'
+
+  - script: |
+      npm install
+      npm run build
+    displayName: 'Install dependencies and build'
+
+  - script: echo "✅ Build completed successfully!"
+    displayName: 'Post Build Message'
