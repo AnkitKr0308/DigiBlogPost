@@ -6,8 +6,14 @@ import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import store from "./store/store";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Home, AddPost, AllPosts, EditPost, Login, Signup } from "./pages";
+
 import AuthLayout from "./components/Authentication";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import AllPosts from "./pages/AllPosts";
+import AddPost from "./pages/AddPost";
+import EditPost from "./pages/EditPost";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
